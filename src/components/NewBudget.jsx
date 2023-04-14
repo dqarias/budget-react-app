@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Message from './Message'
 
-const NewBudget = ({budget, setBudget}) => {
+const NewBudget = ({budget, setBudget, isValidBudget, setIsValidBudget}) => {
 
     const [message, setMessage] = useState('')
     const handleOnChange = (e) => {
@@ -11,11 +11,12 @@ const NewBudget = ({budget, setBudget}) => {
 
     const handleBudget = (e) => {
         e.preventDefault()
-        if (!Number(budget) || Number(budget) < 0){
-            setMessage('is an invalid budget')
-        }else{
-            console.log('valid')
+        if (!budget || budget < 0){
+            return setMessage('is an invalid budget')
         }
+            setMessage('')
+            setIsValidBudget(true)
+            console.log(budget)
     }
 
   return (
@@ -25,7 +26,7 @@ const NewBudget = ({budget, setBudget}) => {
                 <label htmlFor="">Define your budget</label>
                 <input
                 className='new-budget' 
-                type="text"
+                type="number"
                 placeholder='Add your budget'
                 value={budget}
                 onChange={handleOnChange} />
