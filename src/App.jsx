@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Header from './components/Header'
+import ListExpense from './components/ListExpense'
 import Modal from './components/Modal'
 import { generateId } from './helpers'
 import IconNewExpense from './img/new-expense.svg'
@@ -21,6 +22,7 @@ function App() {
 
   const handleExpense = (expense) => {
     expense.id = generateId();
+    expense.date = Date.now();
     setExpenses((prevState)=>[...prevState, expense])
     setAnimateModal(false)
         setTimeout(() => {
@@ -29,18 +31,23 @@ function App() {
   }
 
   return (
-    <div>
+    <div className={modal && 'fixed'}>
       <Header 
       budget={budget}
       setBudget={setBudget}
       isValidBudget={isValidBudget}
       setIsValidBudget={setIsValidBudget}/>
-      {isValidBudget && 
-      (<div 
-      className='new-expense'
-      onClick={handleClick}>
-        <img src={IconNewExpense} alt="icon new expense" />
-      </div>)}
+      {isValidBudget && (
+      <>
+        <main>
+          <ListExpense expenses={expenses}/>
+        </main>
+        <div 
+        className='new-expense'
+        onClick={handleClick}>
+          <img src={IconNewExpense} alt="icon new expense" />
+        </div>
+      </>)}
 
       {modal && 
         <Modal 
