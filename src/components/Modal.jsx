@@ -57,7 +57,7 @@ const [message, setMessage] = useState('')
                     onChange={(e)=>setName(e.target.value)} />
             </div>
             <div className='field'>
-                <label htmlFor="quantity">Expense's Name</label>
+                <label htmlFor="quantity">Expense's Quantity</label>
                 <input 
                     id='quantity'
                     type="number"
