@@ -6,12 +6,12 @@ import { generateId } from './helpers'
 import IconNewExpense from './img/new-expense.svg'
 
 function App() {
+  const [expenses, setExpenses] = useState([])
   const [budget, setBudget] = useState(0)
   const [isValidBudget, setIsValidBudget] = useState(false)
   const [modal, setModal] = useState(false)
   const [animateModal, setAnimateModal] = useState(false)
-  const [expenses, setExpenses] = useState([])
-
+  
   const handleClick = () => {
     setModal(true)
     
@@ -31,12 +31,13 @@ function App() {
   }
 
   return (
-    <div className={modal && 'fixed'}>
+    <div className={modal ? 'fixed' : ''}>
       <Header 
       budget={budget}
       setBudget={setBudget}
       isValidBudget={isValidBudget}
-      setIsValidBudget={setIsValidBudget}/>
+      setIsValidBudget={setIsValidBudget}
+      expenses={expenses}/>
       {isValidBudget && (
       <>
         <main>

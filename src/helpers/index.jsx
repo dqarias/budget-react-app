@@ -14,3 +14,7 @@ export const formatDate = date => {
     }
     return newDate.toLocaleString('en-US', options)
 }
+
+export const formatNumber = (number) => {
+    return Number(number).toLocaleString("en-US", {style:"currency", currency:"USD"});
+}
