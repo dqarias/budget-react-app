@@ -48,6 +48,11 @@ function App() {
         }, 500);
   }
 
+  const handleDeleteExpense = (id) => {
+          const expenseUpdate = expenses.filter(expense => expense.id !== id)
+          setExpenses(expenseUpdate)
+  }
+
   return (
     <div className={modal ? 'fixed' : ''}>
       <Header 
@@ -61,7 +66,8 @@ function App() {
         <main>
           <ListExpense 
           expenses={expenses}
-          setExpenseEdit={setExpenseEdit} />
+          setExpenseEdit={setExpenseEdit}
+          handleDeleteExpense={handleDeleteExpense} />
         </main>
         <div 
         className='new-expense'
