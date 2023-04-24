@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import ListExpense from './components/ListExpense'
 import Modal from './components/Modal'
@@ -11,19 +11,37 @@ function App() {
   const [isValidBudget, setIsValidBudget] = useState(false)
   const [modal, setModal] = useState(false)
   const [animateModal, setAnimateModal] = useState(false)
+  const [expenseEdit, setExpenseEdit] = useState({}) 
   
+  useEffect(()=>{
+    if(Object.keys(expenseEdit).length > 0){
+      setModal(true)
+      setTimeout(()=>{
+      setAnimateModal(true)
+    }, 500)
+    }
+  }, [expenseEdit])
+
   const handleClick = () => {
     setModal(true)
-    
+    setExpenseEdit({})
     setTimeout(()=>{
       setAnimateModal(true)
     }, 500)
   }
 
   const handleExpense = (expense) => {
-    expense.id = generateId();
-    expense.date = Date.now();
-    setExpenses((prevState)=>[...prevState, expense])
+    if(expense.id){
+      const updateExpense = 
+      expenses.map(prevState => prevState.id === expense.id ? expense : prevState)
+      expense.date = Date.now();
+      setExpenses(updateExpense)
+      
+    }else{
+      expense.id = generateId();
+      expense.date = Date.now();
+      setExpenses((prevState)=>[...prevState, expense])
+    }
     setAnimateModal(false)
         setTimeout(() => {
             setModal(false) 
@@ -41,7 +59,9 @@ function App() {
       {isValidBudget && (
       <>
         <main>
-          <ListExpense expenses={expenses}/>
+          <ListExpense 
+          expenses={expenses}
+          setExpenseEdit={setExpenseEdit} />
         </main>
         <div 
         className='new-expense'
@@ -56,6 +76,7 @@ function App() {
         animateModal={animateModal}
         setAnimateModal = {setAnimateModal}
         handleExpense = {handleExpense}
+        expenseEdit={expenseEdit}
         />}
       
     </div>

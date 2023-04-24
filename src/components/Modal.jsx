@@ -1,13 +1,31 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import CloseBtn from '../img/close.svg'
 import Message from './Message'
 
-const Modal = ({setModal, animateModal, setAnimateModal, handleExpense}) => {
+const Modal = ({
+    setModal, 
+    animateModal, 
+    setAnimateModal, 
+    handleExpense, 
+    expenseEdit
+}) => {
 const [name, setName] = useState('')
 const [quantity, setQuantity] = useState(0)
 const [category, setCategory] = useState('')
 const [message, setMessage] = useState('')
+const [id, setId] = useState('')
+const [date, setDate] = useState('')
+
+useEffect(() => {
+    if ( Object.keys(expenseEdit).length > 0){
+        setName(expenseEdit.name)
+        setQuantity(expenseEdit.quantity)
+        setCategory(expenseEdit.category)
+        setId(expenseEdit.id)
+        setDate(expenseEdit.date)
+    }
+}, [])
 
 
     const handleCloseModal = () => {
@@ -27,7 +45,7 @@ const [message, setMessage] = useState('')
             return
         }
       
-        handleExpense({name, quantity, category})
+        handleExpense({name, quantity, category, id, date})
         setName('')
         setQuantity('')
         setCategory('')
@@ -45,7 +63,7 @@ const [message, setMessage] = useState('')
         <form 
         className={`form ${animateModal ? 'animate' : 'close'}`}
         onSubmit={handleSubmit} >
-            <legend>New Expense</legend>
+            <legend>{expenseEdit.name ? 'Edit Expense' : 'New Expense'}</legend>
             {message && <Message type='error'>{message}</Message>}
             <div className='field'>
                 <label htmlFor="name">Expense's Name</label>
@@ -83,7 +101,7 @@ const [message, setMessage] = useState('')
                     <option value="suscriptions">Suscriptions</option>
                 </select>
             </div>
-            <input type="submit" value='Add Expense' />
+            <input type="submit" value={expenseEdit.name ? 'Save Change' :'Add Expense'} />
         </form>
     </div>
   )
