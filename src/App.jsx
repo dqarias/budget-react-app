@@ -36,6 +36,7 @@ function App() {
       expenses.map(prevState => prevState.id === expense.id ? expense : prevState)
       expense.date = Date.now();
       setExpenses(updateExpense)
+      setExpenseEdit({})
       
     }else{
       expense.id = generateId();
